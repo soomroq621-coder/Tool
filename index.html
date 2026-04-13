@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Credit Note Generator | iCreativez</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8eff5 0%, #d4e0ec 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .master-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .hero-header {
+            background: linear-gradient(135deg, #0B2B3F 0%, #1C4E6F 100%);
+            padding: 1.3rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area span {
+            background: #FFC107;
+            font-size: 0.7rem;
+            color: #0B2B3F;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .header-badge {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.3rem;
+            border-radius: 60px;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        /* Two columns */
+        .split-layout {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .form-area {
+            flex: 1.2;
+            background: #ffffff;
+            padding: 2rem;
+            border-right: 1px solid #e2edf2;
+        }
+
+        .preview-area {
+            flex: 1.3;
+            background: #F8FBFE;
+            padding: 2rem;
+        }
+
+        .section-badge {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1C4E6F;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #FFB347;
+            padding-left: 1rem;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fullwidth {
+            grid-column: span 2;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .input-field label {
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: #2c5a6e;
+            letter-spacing: 0.3px;
+        }
+
+        .input-field input, .input-field textarea {
+            padding: 0.7rem 1rem;
+            border: 1.5px solid #e0e8f0;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            background: white;
+            font-family: inherit;
+        }
+
+        .input-field input:focus, .input-field textarea:focus {
+            outline: none;
+            border-color: #FFB347;
+            box-shadow: 0 0 0 3px rgba(255, 180, 71, 0.2);
+        }
+
+        /* Items Table */
+        .items-editor {
+            background: #FEFAF2;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .items-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .item-table-wrap {
+            overflow-x: auto;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .item-table th {
+            background: #F1E7D3;
+            padding: 12px 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #2d3e50;
+        }
+
+        .item-table td {
+            padding: 10px 6px;
+            border-bottom: 1px solid #ece2d0;
+        }
+
+        .item-table input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #ddd2bc;
+            font-size: 0.8rem;
+        }
+
+        .delete-item {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #c2410c;
+            font-weight: bold;
+        }
+
+        .btn-sm {
+            background: #1C4E6F;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .btn-sm:hover {
+            background: #0f3b5a;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #FFB347;
+            border: none;
+            font-weight: 700;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #B9CFE4;
+            padding: 0.8rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #ffa01e;
+            transform: translateY(-1px);
+        }
+
+        /* Preview Card */
+        .credit-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #eef2fa;
+        }
+
+        .card-header {
+            background: #0B2B40;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: white;
+        }
+
+        .credit-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .credit-num-badge {
+            background: #ffb34730;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+        }
+
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #e7edf3;
+            font-size: 0.85rem;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #1f4e6e;
+        }
+
+        .items-preview-table {
+            width: 100%;
+            margin: 1rem 0;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .items-preview-table th, .items-preview-table td {
+            padding: 8px 5px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f5;
+        }
+
+        .items-preview-table th {
+            background: #f5f0e6;
+        }
+
+        .grand-total {
+            text-align: right;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            border-top: 2px solid #FFB347;
+            padding-top: 0.8rem;
+            color: #1C4E6F;
+        }
+
+        .watermark-note {
+            margin-top: 1rem;
+            font-size: 0.6rem;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 850px) {
+            .form-area, .preview-area {
+                flex: auto;
+                width: 100%;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .fullwidth {
+                grid-column: span 1;
+            }
+            body {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="master-container">
+    <div class="hero-header">
+        <div class="logo-area">
+            <h1>📄 CREDIT NOTE <span>iCreativez</span></h1>
+            <div style="font-size:0.7rem; opacity:0.85;">Qurat-ul-Ain · Official Document</div>
+        </div>
+        <div class="header-badge">⚡ Real-time | Auto Calculations | Print PDF</div>
+    </div>
+
+    <div class="split-layout">
+        <!-- LEFT FORM PANEL -->
+        <div class="form-area">
+            <div class="section-badge">📋 Credit Note Information</div>
+            <div class="grid-2col">
+                <div class="input-field">
+                    <label>🔢 Enrollment (Ref No.)</label>
+                    <input type="text" id="enrollmentRef" value="BSAI/3-25/085" placeholder="e.g., BSAI/3-25/085">
+                </div>
+                <div class="input-field">
+                    <label>📅 Date of Issue</label>
+                    <input type="date" id="issueDate" value="2026-04-13">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>🏢 My Company (Issuer)</label>
+                    <input type="text" id="issuerCompany" value="iCreativez" placeholder="Company Name">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>📧 My Email</label>
+                    <input type="text" id="issuerEmail" value="qurat-ul-ain3.25bsai085@bnbwu.edu.pk" placeholder="Email">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>👤 Prepared By</label>
+                    <input type="text" id="preparedByName" value="Qurat-ul-Ain" placeholder="Your Name">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>🏢 Bill To (Customer)</label>
+                    <input type="text" id="customerName" value="Radiance Solutions Pvt Ltd" placeholder="Customer name">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>🔑 GST / Tax ID / Email (Optional)</label>
+                    <input type="text" id="taxOptional" value="" placeholder="Leave empty if not available">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>🧾 Original Invoice Reference</label>
+                    <input type="text" id="originalInvoice" value="INV/24-25/892" placeholder="Invoice number">
+                </div>
+                <div class="input-field fullwidth">
+                    <label>📝 Credit Reason / Remarks</label>
+                    <textarea id="creditReason" rows="2">Goods returned due to quality mismatch &amp; partial damage</textarea>
+                </div>
+            </div>
+
+            <div class="items-editor">
+                <div class="items-header-actions">
+                    <strong style="color:#2c5a6e;">📦 Credit Line Items (Qty, Price, Discount → Net Auto)</strong>
+                    <button type="button" class="btn-sm" id="addItemBtn">+ Add Item</button>
+                </div>
+                <div class="item-table-wrap">
+                    <table class="item-table" id="itemsTable">
+                        <thead>
+                            <tr><th>Description</th><th>Qty</th><th>Unit Price (₹)</th><th>Discount (₹)</th><th>Net Amount (₹)</th><th></th></tr>
+                        </thead>
+                        <tbody id="itemsTableBody">
+                            <!-- dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="action-group">
+                <button class="btn-primary" id="refreshPreviewBtn">⟳ Refresh Preview</button>
+                <button class="btn-outline" id="resetDefaultBtn">↺ Reset Default Data</button>
+            </div>
+            <div class="watermark-note" style="margin-top:1rem; text-align:left;">
+                💡 Net Amount = (Qty × Unit Price) − Discount. Auto calculates instantly.
+            </div>
+        </div>
+
+        <!-- RIGHT PREVIEW PANEL -->
+        <div class="preview-area">
+            <div class="section-badge">📄 Credit Note Preview</div>
+            <div class="credit-card">
+                <div class="card-header">
+                    <div class="credit-title">CREDIT MEMO</div>
+                    <div class="credit-num-badge" id="previewEnrollment">BSAI/3-25/085</div>
+                </div>
+                <div class="preview-content" id="previewContent">
+                    <!-- live preview injected -->
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                <button class="btn-primary" id="printBtn" style="background:#2c5f8a; color:white;">🖨️ Print / Save as PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DOM Elements
+    const enrollmentInput = document.getElementById('enrollmentRef');
+    const dateInput = document.getElementById('issueDate');
+    const issuerCompanyInput = document.getElementById('issuerCompany');
+    const issuerEmailInput = document.getElementById('issuerEmail');
+    const preparedByNameInput = document.getElementById('preparedByName');
+    const customerInput = document.getElementById('customerName');
+    const taxOptionalInput = document.getElementById('taxOptional');
+    const originalInvoiceInput = document.getElementById('originalInvoice');
+    const reasonInput = document.getElementById('creditReason');
+    const itemsBody = document.getElementById('itemsTableBody');
+    const addBtn = document.getElementById('addItemBtn');
+    const refreshBtn = document.getElementById('refreshPreviewBtn');
+    const resetBtn = document.getElementById('resetDefaultBtn');
+    const printBtn = document.getElementById('printBtn');
+    const previewEnrollmentSpan = document.getElementById('previewEnrollment');
+    const previewContainer = document.getElementById('previewContent');
+
+    // Format Indian Rupee
+    const formatINR = (val) => {
+        let num = parseFloat(val);
+        if (isNaN(num)) num = 0;
+        return '₹ ' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Calculate Net = (Qty * Price) - Discount
+    function computeNet(qty, price, discount) {
+        let q = parseFloat(qty) || 0;
+        let p = parseFloat(price) || 0;
+        let d = parseFloat(discount) || 0;
+        let gross = q * p;
+        let net = gross - d;
+        return net < 0 ? 0 : net;
+    }
+
+    // Update single row's Net Amount display
+    function updateRowDisplay(row) {
+        const qtyInput = row.querySelector('.item-qty');
+        const priceInput = row.querySelector('.item-price');
+        const discInput = row.querySelector('.item-disc');
+        const netSpan = row.querySelector('.row-net');
+        if (qtyInput && priceInput && discInput && netSpan) {
+            let net = computeNet(qtyInput.value, priceInput.value, discInput.value);
+            netSpan.innerText = formatINR(net);
+            row.setAttribute('data-net', net);
+        }
+    }
+
+    // Bind events to row (inputs + delete)
+    function bindRowEvents(row) {
+        const inputs = row.querySelectorAll('input');
+        inputs.forEach(inp => {
+            inp.removeEventListener('input', handleRowInput);
+            inp.addEventListener('input', handleRowInput);
+        });
+        const delBtn = row.querySelector('.delete-item');
+        if (delBtn) {
+            delBtn.removeEventListener('click', handleDelete);
+            delBtn.addEventListener('click', handleDelete);
+        }
+        function handleRowInput() {
+            updateRowDisplay(row);
+            updatePreview();
+        }
+        function handleDelete(e) {
+            e.preventDefault();
+            const tbody = row.parentNode;
+            if (tbody.children.length > 1) {
+                row.remove();
+            } else {
+                // Reset last row instead of deleting
+                const desc = row.querySelector('.item-desc');
+                const qty = row.querySelector('.item-qty');
+                const price = row.querySelector('.item-price');
+                const disc = row.querySelector('.item-disc');
+                if (desc) desc.value = '';
+                if (qty) qty.value = 1;
+                if (price) price.value = 0;
+                if (disc) disc.value = 0;
+                updateRowDisplay(row);
+            }
+            updatePreview();
+        }
+        updateRowDisplay(row);
+    }
+
+    // Escape HTML
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Create a new item row
+    function createItemRow(desc = '', qty = 1, price = 0, disc = 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" class="item-desc" value="${escapeHtml(desc)}" placeholder="Product / Service" style="min-width:130px;"></td>
+            <td><input type="number" class="item-qty" value="${qty}" step="0.5" min="0" style="width:75px;"></td>
+            <td><input type="number" class="item-price" value="${price}" step="0.01" min="0" style="width:105px;"></td>
+            <td><input type="number" class="item-disc" value="${disc}" step="0.01" min="0" style="width:90px;"></td>
+            <td class="row-net" style="font-weight:600;">${formatINR(computeNet(qty, price, disc))}</td>
+            <td><button class="delete-item" title="Remove">✖</button></td>
+        `;
+        bindRowEvents(tr);
+        return tr;
+    }
+
+    // Load default items (example items)
+    function loadDefaultItems() {
+        itemsBody.innerHTML = '';
+        const item1 = createItemRow('Premium Ergonomic Chair (Return)', 2, 12500, 500);
+        const item2 = createItemRow('USB-C Docking Station', 1, 4800, 0);
+        const item3 = createItemRow('Adjustable Monitor Stand', 3, 1850, 200);
+        itemsBody.appendChild(item1);
+        itemsBody.appendChild(item2);
+        itemsBody.appendChild(item3);
+    }
+
+    // Get all items from table
+    function getAllItems() {
+        const rows = itemsBody.querySelectorAll('tr');
+        const items = [];
+        for (let row of rows) {
+            let desc = row.querySelector('.item-desc')?.value || '';
+            let qty = parseFloat(row.querySelector('.item-qty')?.value) || 0;
+            let price = parseFloat(row.querySelector('.item-price')?.value) || 0;
+            let disc = parseFloat(row.querySelector('.item-disc')?.value) || 0;
+            let net = computeNet(qty, price, disc);
+            items.push({ description: desc, quantity: qty, unitPrice: price, discount: disc, total: net });
+        }
+        return items;
+    }
+
+    // Calculate grand total
+    function getGrandTotal() {
+        const items = getAllItems();
+        let sum = 0;
+        items.forEach(i => sum += i.total);
+        return sum;
+    }
+
+    // Update the entire preview panel
+    function updatePreview() {
+        // Get form values
+        let enrollment = enrollmentInput.value.trim() || "BSAI/3-25/085";
+        let issueDate = dateInput.value || "2026-04-13";
+        let issuerCompany = issuerCompanyInput.value.trim() || "iCreativez";
+        let issuerEmail = issuerEmailInput.value.trim() || "icreativez.global@gmail.com";
+        let preparedBy = preparedByNameInput.value.
